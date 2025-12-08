@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SAS Tennis de Table - Nos Sponsors</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      background: #f5f5f5;
+      font-family: 'Arial', sans-serif;
+      color: #333;
+      overflow: hidden;
+    }
+    
+    /* HEADER AVEC LOGO CLUB */
+    .header {
+      background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    
+    .club-logo {
+      height: 80px;
+      object-fit: contain;
+    }
+    
+    .container {
+      display: grid;
+      grid-template-columns: 30% 70%;
+      height: calc(100vh - 120px);
+      padding: 20px;
+      gap: 20px;
+    }
+    
+    /* SECTION SPONSORS */
+    .sponsors-section {
+      background: white;
+      border-radius: 15px;
+      padding: 25px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      overflow-y: auto;
+    }
+    
+    .sponsors-section h1 {
+      font-size: 36px;
+      margin-bottom: 25px;
+      text-align: center;
+      color: #4CAF50;
+      border-bottom: 3px solid #4CAF50;
+      padding-bottom: 15px;
+    }
+    
+    .sponsor-item {
+      background: #f9f9f9;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 18px;
+      text-align: center;
+      transition: all 0.3s;
+      border: 2px solid #e0e0e0;
+    }
+    
+    .sponsor-item:hover {
+      transform: scale(1.03);
+      box-shadow: 0 6px 20px rgba(76, 175, 80, 0.3);
+      border-color: #4CAF50;
+    }
+    
+    .sponsor-logo {
+      width: 100%;
+      max-width: 220px;
+      height: 180px;
+      object-fit: contain;
+      margin-bottom: 12px;
+    }
+    
+    .sponsor-name {
+      color: #333;
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+    
+    .sponsor-subtitle {
+      color: #666;
+      font-size: 15px;
+      line-height: 1.5;
+    }
+    
+    /* SECTION ACTUALITÉS */
+    .news-section {
+      background: white;
+      border-radius: 15px;
+      padding: 25px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .news-section h2 {
+      font-size: 34px;
+      margin-bottom: 20px;
+      text-align: center;
+      color: #4CAF50;
+      border-bottom: 3px solid #4CAF50;
+      padding-bottom: 15px;
+    }
+    
+    .news-container {
+      background: #fafafa;
+      border-radius: 12px;
+      height: calc(100% - 90px);
+      overflow: hidden;
+      border: 2px solid #e0e0e0;
+      position: relative;
+    }
+    
+    /* Conteneurs de contenu */
+    .content-wrapper {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 0.8s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .content-wrapper.active {
+      opacity: 1;
+      z-index: 2;
+    }
+    
+    /* Facebook iframe */
+    .fb-page {
+      width: 100% !important;
+      height: 100% !important;
+    }
+    
+    /* PDF Viewer */
+    .pdf-viewer {
+      width: 100%;
+      height: 100%;
+      background: white;
+      padding: 30px;
+      overflow-y: auto;
+    }
+    
+    .pdf-content {
+      max-width: 900px;
+      margin: 0 auto;
+      background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+      color: white;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+    }
+    
+    .pdf-content h1 {
+      font-size: 42px;
+      text-align: center;
+      margin-bottom: 30px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+    
+    .pdf-section {
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      padding: 25px;
+      margin-bottom: 25px;
+      border: 2px solid rgba(255,255,255,0.3);
+    }
+    
+    .pdf-section h2 {
+      font-size: 28px;
+      margin-bottom: 15px;
+      color: #fff;
+      border-bottom: 2px solid rgba(255,255,255,0.5);
+      padding-bottom: 10px;
+    }
+    
+    .pdf-section p {
+      font-size: 18px;
+      line-height: 1.8;
+      margin-bottom: 12px;
+    }
+    
+    .pdf-section ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    
+    .pdf-section li {
+      font-size: 18px;
+      line-height: 1.8;
+      margin-bottom: 10px;
+      padding-left: 30px;
+      position: relative;
+    }
+    
+    .pdf-section li:before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      font-weight: bold;
+      font-size: 22px;
+    }
+    
+    .highlight-box {
+      background: rgba(255,255,255,0.25);
+      padding: 20px;
+      border-radius: 10px;
+      margin: 20px 0;
+      border-left: 5px solid white;
+    }
+    
+    .contact-info {
+      background: rgba(255,255,255,0.2);
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+    
+    .contact-info p {
+      margin: 8px 0;
+      font-size: 16px;
+    }
+    
+    /* Indicateur de flux actif */
+    .flux-indicator {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #4CAF50;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: bold;
+      z-index: 5;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    
+    .loading {
+      text-align: center;
+      padding: 40px;
+      color: #4CAF50;
+      font-size: 22px;
+      z-index: 10;
+      position: relative;
+    }
+    
+    .fallback-message {
+      display: none;
+      text-align: center;
+      padding: 40px;
+      color: #666;
+      font-size: 20px;
+      z-index: 10;
+      position: relative;
+    }
+    
+    .fallback-message.show {
+      display: block;
+    }
+    
+    /* Scrollbar personnalisée */
+    .sponsors-section::-webkit-scrollbar,
+    .pdf-viewer::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    .sponsors-section::-webkit-scrollbar-track,
+    .pdf-viewer::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+    
+    .sponsors-section::-webkit-scrollbar-thumb,
+    .pdf-viewer::-webkit-scrollbar-thumb {
+      background: #4CAF50;
+      border-radius: 10px;
+    }
+    
+    .sponsors-section::-webkit-scrollbar-thumb:hover,
+    .pdf-viewer::-webkit-scrollbar-thumb:hover {
+      background: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <div class="header">
+    <img src="https://d41chssnpqdne.cloudfront.net/user_upload_by_module/chat_bot/files/57890236/1cnQKD4cwCGYliEs.jpg?Expires=1766429635&Signature=BHNQez-qctWAYkotQa35bwlt5o9OeqKCpuxKUo~to-hc6MKcomaOgkzqZ0ceFLk55VQ6cNpHPhOksrGitqUEva3dRRaNWMrDsH1MvToAEXQDkyxqjT2IgJjdW-BHnzTRyv4BDs1GxEHXakIDWFpBp~tVyr2WJMzQt4WiTbKshOc4pHYOmi2BcdPBlf8iArkfvMrhT602DArZY079Ji3nBTYaCZBCcLXN3JrkGe2MKQWwHCTtiAyEc290gaiAi4BDhNHMEQioOVAQMhEKqV1uN85~JRriOMnIZbdN6Uus8ZBG-PzYpmTh4aUbvaPZCzjknjg2gnHdF0yTF07zZ5tEKw__&Key-Pair-Id=K3USGZIKWMDCSX" alt="SAS Tennis de Table" class="club-logo">
+  </div>
+  
+  <div class="container">
+    <!-- COLONNE SPONSORS -->
+    <div class="sponsors-section">
+      <h1>🏆 Nos Sponsors</h1>
+      
+      <div class="sponsor-item">
+        <img src="https://d41chssnpqdne.cloudfront.net/user_upload_by_module/chat_bot/files/57890236/Uoy1qzj1jHqwdmdb.?Expires=1766429011&Signature=GMiAz4NPiY5xugtyLTyzhUQnXzULprj-s-t1CJzrFjLxLH12zFZ1ZCsy9~D26f70TqsrWx14WNgAk4kGvmWcnWGzpTTdIf3T7DTFDY~Sk1J268499LKzTp~-Wr2y9P4MdA07gJ7DfKRVuLlaBYP7HQDEpaoRwND5xOpI45IlTsX2U6Sxkjm-SPWIgg-5iDExyu5AKsgDlScXfHhnlMz0H-YHBc751xm9aSmB2kvxdK6ix8u~xvMVhrEkTkVitduC6X007iHsClYNsIRRDr0IXUXJy2JTVSanW~b93zGE7DeNGHWedAbdFRITyeiSsDtyNc0YoslTWUDEbkGi1fMgQw__&Key-Pair-Id=K3USGZIKWMDCSX" alt="La Boucherie du Coin" class="sponsor-logo">
+        <div class="sponsor-name">La Boucherie du Coin</div>
+        <div class="sponsor-subtitle">Boucherie - Charcuterie - Traiteur<br>Esvres-sur-Indre</div>
+      </div>
+      
+      <div class="sponsor-item">
+        <img src="https://d41chssnpqdne.cloudfront.net/user_upload_by_module/chat_bot/files/57890236/ZIiZGrxrQjDOZKYM.png?Expires=1766429446&Signature=akzt10m4M-M-v2jAbqB68r0X90iOmjO~bwLxccs0puAvON8BtEV5uLDRe557pJ8kJVQ~IXbUozDV56HghiY4U~YefiQ0vlhQPb1jWaEReZIcBw7FQv2U7tsmWEzR7ppJSk8u2nytS-Ig-AtAZ7DKC5PYDdo2njYOf-tk7MK6IVy4kZeGtx8J6gRE-FIvniIBiahK7XNv-MiF3GO7QdhKzoiLP5Hk~2KRPUeUlE-1~bE-0~OxGJwzIOTyD52kq4ETPL9iHZps1cq9nXtcs6HgOc6g1r07i-zuIeXYNrvvBYe0R-dTdF4O1bnaA-4YuWYaOczo45vQMZsYuNj5HArB0Q__&Key-Pair-Id=K3USGZIKWMDCSX" alt="Optic'AC" class="sponsor-logo">
+        <div class="sponsor-name">Optic'AC</div>
+        <div class="sponsor-subtitle">Service - Qualité - Conseil<br>1, rue Jean-Marie-Boivin<br>37550 Saint-Avertin<br>Tél : 02 47 27 20 88</div>
+      </div>
+    </div>
+    
+    <!-- COLONNE ACTUALITÉS -->
+    <div class="news-section">
+      <h2>📱 Actualités</h2>
+      
+      <div class="news-container">
+        <div class="flux-indicator" id="flux-indicator">Boucherie du Coin</div>
+        
+        <div class="loading" id="loading">⏳ Chargement des actualités...</div>
+        <div class="fallback-message" id="fallback">
+          ⚠️ Les flux Facebook ne peuvent pas être affichés.
+        </div>
+        
+        <!-- Contenu 1 : Boucherie du Coin -->
+        <div id="fb-root"></div>
+        <div class="content-wrapper active" id="content-1">
+          <div class="fb-page" 
+               data-href="https://www.facebook.com/boucherieducoin.esvres" 
+               data-tabs="timeline" 
+               data-width="800" 
+               data-height="900"
+               data-small-header="false" 
+               data-adapt-container-width="true" 
+               data-hide-cover="false" 
+               data-show-facepile="true">
+          </div>
+        </div>
+        
+        <!-- Contenu 2 : Optic'AC -->
+        <div class="content-wrapper" id="content-2">
+          <div class="fb-page" 
+               data-href="https://www.facebook.com/OpticACSaintAvertin" 
+               data-tabs="timeline" 
+               data-width="800" 
+               data-height="900"
+               data-small-header="false" 
+               data-adapt-container-width="true" 
+               data-hide-cover="false" 
+               data-show-facepile="true">
+          </div>
+        </div>
+        
+        <!-- Contenu 3 : Devenir Sponsor -->
+        <div class="content-wrapper" id="content-3">
+          <div class="pdf-viewer">
+            <div class="pdf-content">
+              <h1>🏓 Soutenez le SAS TT St-Avertin !</h1>
+              
+              <div class="pdf-section">
+                <h2>🤝 Comment nous soutenir ?</h2>
+                <p><strong>👉 En tant que Sponsor (entreprises) :</strong><br>
+                Vous soutenez le club en échange de visibilité (publicité, image associée à nos valeurs sportives).</p>
+                
+                <p><strong>👉 En tant que Mécène (particuliers & entreprises) :</strong><br>
+                Vous apportez un soutien sans contrepartie publicitaire, pour contribuer au développement du club et de ses joueurs, jeunes et moins jeunes 😉.</p>
+              </div>
+              
+              <div class="pdf-section">
+                <h2>💡 Un geste généreux = un avantage fiscal !</h2>
+                <div class="highlight-box">
+                  <p><strong>✓ 66% de réduction d'impôt pour les particuliers</strong></p>
+                  <p><strong>✓ 60% pour les entreprises</strong> (dans la limite de 0,5% du CA)</p>
+                  <p style="margin-top: 15px; font-size: 20px;">➡️ <strong>Exemple :</strong> un don de 1000€ = un coût réel de seulement <strong>400€</strong></p>
+                </div>
+              </div>
+              
+              <div class="pdf-section">
+                <h2>🏆 Le SAS TT en chiffres</h2>
+                <ul>
+                  <li>220 licenciés (tout niveau : départemental, régional, national et de tout âge 4 à 80 ans)</li>
+                  <li>Une section handi sport et sport adapté (club labelisé)</li>
+                  <li>3 entraineurs salariés</li>
+                  <li>30 équipes (jeunes et adultes)</li>
+                  <li>2 salles spécifiques (24 tables)</li>
+                  <li>10 manifestations par an</li>
+                  <li>1 tournoi national B</li>
+                </ul>
+              </div>
+              
+              <div class="pdf-section">
+                <h2>🎯 Notre Ambition</h2>
+                <ul>
+                  <li>La montée de notre équipe 1 en national</li>
+                  <li>Un projet de fin d'année pour les jeunes (tournoi international, échange entre clubs...)</li>
+                  <li>Une équipe à tous les échelons pour l'épanouissement de chacun de nos licenciés</li>
+                  <li>La pérennisation de l'emploi de nos entraineurs-salariés</li>
+                  <li>Augmenter nos licenciés !</li>
+                </ul>
+              </div>
+              
+              <div class="pdf-section">
+                <h2>💚 Nos Valeurs</h2>
+                <p><strong>Bienveillance - Respect - Sportivité !</strong></p>
+                <p>✓ Un Sport pour tous et multigénérationnel !</p>
+                <p>✓ Un Club à taille humaine, ambitieux et chaleureux !</p>
+                <p>✓ Formateur de TALENTS</p>
+              </div>
+              
+              <div class="pdf-section">
+                <h2>📞 Contacts Commission Partenariat</h2>
+                <div class="contact-info">
+                  <p><strong>Anne-Laure :</strong> 06 28 32 46 39</p>
+                  <p><strong>Florian :</strong> 06 44 18 51 11</p>
+                  <p><strong>Olivier :</strong> 06 61 53 11 67</p>
+                  <p><strong>Rémi :</strong> 06 87 50 09 73</p>
+                  <p><strong>Thomas :</strong> 06 18 86 85 48</p>
+                  <p style="margin-top: 15px;"><strong>Email :</strong> partenaires@tennisdetable.saint-avertin-sports.fr</p>
+                  <p><strong>Web :</strong> www.sas-tennisdetable.fr</p>
+                  <p><strong>Adresse :</strong> 31 rue Frédéric Joliot Curie, 37550 Saint-Avertin</p>
+                </div>
+              </div>
+              
+              <div style="text-align: center; margin-top: 30px; font-size: 24px;">
+                <p><strong>🤝 Rejoignez-nous et faites grandir le SAS TT !</strong></p>
+                <p style="margin-top: 15px;">On compte sur vous 😉</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- SDK Facebook -->
+  <script async defer crossorigin="anonymous" 
+          src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v18.0" 
+          onload="fbLoaded()" 
+          onerror="fbError()">
+  </script>
+  
+  <script>
+    let fbLoadTimeout;
+    let currentContentIndex = 0;
+    
+    const contents = [
+      { name: 'Boucherie du Coin', id: 'content-1' },
+      { name: "Optic'AC", id: 'content-2' },
+      { name: 'Devenir Sponsor', id: 'content-3' }
+    ];
+    
+    function fbLoaded() {
+      clearTimeout(fbLoadTimeout);
+      document.getElementById('loading').style.display = 'none';
+      console.log('Facebook SDK chargé');
+      
+      // Démarre le carrousel des contenus
+      startContentCarousel();
+    }
+    
+    function fbError() {
+      clearTimeout(fbLoadTimeout);
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('fallback').classList.add('show');
+      document.getElementById('flux-indicator').style.display = 'none';
+      console.error('Erreur chargement Facebook');
+      
+      // Affiche quand même le contenu sponsor
+      setTimeout(() => {
+        document.getElementById('fallback').style.display = 'none';
+        document.getElementById('content-3').classList.add('active');
+        document.getElementById('flux-indicator').textContent = 'Devenir Sponsor';
+        document.getElementById('flux-indicator').style.display = 'block';
+      }, 2000);
+    }
+    
+    // Carrousel des contenus (change toutes les 20 secondes)
+    function startContentCarousel() {
+      setInterval(() => {
+        // Cache le contenu actuel
+        document.getElementById(contents[currentContentIndex].id).classList.remove('active');
+        
+        // Passe au suivant
+        currentContentIndex = (currentContentIndex + 1) % contents.length;
+        
+        // Affiche le nouveau contenu
+        document.getElementById(contents[currentContentIndex].id).classList.add('active');
+        
+        // Met à jour l'indicateur
+        document.getElementById('flux-indicator').textContent = contents[currentContentIndex].name;
+        
+        console.log('Changement de contenu:', contents[currentContentIndex].name);
+      }, 20000); // 20 secondes
+    }
+    
+    // Timeout si Facebook ne charge pas en 15 secondes
+    fbLoadTimeout = setTimeout(() => {
+      if (document.getElementById('loading').style.display !== 'none') {
+        fbError();
+      }
+    }, 15000);
+  </script>
+</body>
+</html>
