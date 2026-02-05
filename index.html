@@ -115,7 +115,7 @@
             z-index: 1;
         }
 
-        /* Zone d'affichage des affiches */
+        /* Zone d'affichage des PDF */
         .poster-display {
             background: white;
             border-radius: 30px;
@@ -159,9 +159,6 @@
             position: absolute;
             width: 100%;
             height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             opacity: 0;
             transition: opacity 1s ease-in-out;
         }
@@ -171,12 +168,11 @@
             z-index: 2;
         }
 
-        .poster-slide img {
-            max-width: 90%;
-            max-height: 90%;
-            object-fit: contain;
+        .poster-slide iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
             border-radius: 15px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
         }
 
         .poster-title {
@@ -270,8 +266,8 @@
         }
 
         .sponsor-logo {
-            width: 150px;
-            height: 100px;
+            width: 180px;
+            height: 120px;
             object-fit: contain;
             margin-bottom: 15px;
         }
@@ -281,6 +277,29 @@
             font-weight: bold;
             color: #28a745;
             text-align: center;
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 80px;
+            color: #666;
+            font-size: 19px;
+        }
+
+        .spinner {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #28a745;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+            margin: 25px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         /* Timer d'affichage */
@@ -309,7 +328,7 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Contrôles (cachés en mode TV) */
+        /* Contrôles */
         .controls {
             position: fixed;
             bottom: 30px;
@@ -343,7 +362,7 @@
             background: #dc3545;
         }
 
-        /* Mode plein écran */
+        /* Bouton plein écran */
         .fullscreen-btn {
             position: fixed;
             top: 150px;
@@ -365,6 +384,16 @@
             background: #1e7e34;
             transform: scale(1.05);
         }
+
+        .error {
+            background: #dc3545;
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -372,86 +401,71 @@
     <div class="header">
         <div class="header-content">
             <div class="logo-section">
-                <img src="https://www.sas-tennisdetable.fr/images/logo.png" alt="Logo SAS TT" class="logo">
+                <img src="images/logo_SASTT.jpg" alt="Logo SAS TT" class="logo" onerror="this.src='https://www.sas-tennisdetable.fr/images/logo.png'">
                 <div class="club-info">
                     <h1>SAS Tennis de Table</h1>
                     <p>Saint-Avertin • Indre-et-Loire</p>
                 </div>
             </div>
             <div class="tournament-badge">
-                🏆 TOURNOI 2026 🏓
+                🏆 TOURNOI 2025 🏓
             </div>
         </div>
     </div>
 
     <!-- Container principal -->
     <div class="main-container">
-        <!-- Affichage des affiches -->
+        <!-- Affichage des PDF -->
         <div class="poster-display">
-            <div class="poster-container" id="posterContainer">
-                <!-- Slide 1 -->
-                <div class="poster-slide active">
-                    <img src="images/Flyer sponsor SAS TT .pdf" alt="Affiche Tournoi 1" onerror="this.src='https://via.placeholder.com/600x800/28a745/ffffff?text=Affiche+Tournoi+1'">
-                </div>
-                <!-- Slide 2 -->
-                <div class="poster-slide">
-                    <img src="https://via.placeholder.com/600x800/1e7e34/ffffff?text=Affiche+Tournoi+2" alt="Affiche Tournoi 2">
-                </div>
-                <!-- Slide 3 -->
-                <div class="poster-slide">
-                    <img src="https://via.placeholder.com/600x800/28a745/ffffff?text=Affiche+Tournoi+3" alt="Affiche Tournoi 3">
-                </div>
+            <div id="loading" class="loading">
+                <div class="spinner"></div>
+                Chargement des affiches du tournoi...
             </div>
-            <div class="poster-title" id="posterTitle">Affiche du Tournoi</div>
+            <div class="poster-container" id="posterContainer" style="display:none;">
+                <!-- Les slides PDF seront ajoutées dynamiquement -->
+            </div>
+            <div class="poster-title" id="posterTitle"></div>
             <div class="slide-indicators" id="indicators"></div>
         </div>
 
         <!-- Bande de sponsors défilante -->
         <div class="sponsors-marquee">
             <h2 class="sponsors-title">🤝 Nos Sponsors & Partenaires</h2>
-            <div class="sponsors-track" id="sponsorsTrack">
-                <!-- Sponsors - Groupe 1 -->
+            <div class="sponsors-track">
+                <!-- Groupe 1 -->
                 <div class="sponsor-card">
-                    <img src="https://via.placeholder.com/150x100/28a745/ffffff?text=Sponsor+1" alt="Sponsor 1" class="sponsor-logo">
-                    <div class="sponsor-name">Entreprise Locale</div>
+                    <img src="images/boucherieducoin.esvres.jpg" alt="Boucherie du Coin" class="sponsor-logo" onerror="this.src='https://via.placeholder.com/180x120/28a745/ffffff?text=Boucherie+du+Coin'">
+                    <div class="sponsor-name">Boucherie du Coin</div>
                 </div>
                 <div class="sponsor-card">
-                    <img src="https://via.placeholder.com/150x100/1e7e34/ffffff?text=Sponsor+2" alt="Sponsor 2" class="sponsor-logo">
-                    <div class="sponsor-name">Commerce de Proximité</div>
+                    <img src="images/optiqueac.JPG" alt="Optique AC" class="sponsor-logo" onerror="this.src='https://via.placeholder.com/180x120/1e7e34/ffffff?text=Optique+AC'">
+                    <div class="sponsor-name">Optique AC</div>
                 </div>
                 <div class="sponsor-card">
-                    <img src="https://via.placeholder.com/150x100/28a745/ffffff?text=Sponsor+3" alt="Sponsor 3" class="sponsor-logo">
-                    <div class="sponsor-name">Industrie Régionale</div>
-                </div>
-                <div class="sponsor-card">
-                    <img src="https://via.placeholder.com/150x100/ffd700/1e7e34?text=Mairie" alt="Mairie" class="sponsor-logo">
+                    <img src="https://via.placeholder.com/180x120/ffd700/1e7e34?text=Mairie" alt="Mairie" class="sponsor-logo">
                     <div class="sponsor-name">Ville de Saint-Avertin</div>
                 </div>
                 <div class="sponsor-card">
-                    <img src="https://via.placeholder.com/150x100/28a745/ffffff?text=Sponsor+5" alt="Sponsor 5" class="sponsor-logo">
-                    <div class="sponsor-name">Partenaire Principal</div>
+                    <img src="images/logo_SASTT.jpg" alt="SAS TT" class="sponsor-logo" onerror="this.src='https://www.sas-tennisdetable.fr/images/logo.png'">
+                    <div class="sponsor-name">SAS Tennis de Table</div>
                 </div>
                 
-                <!-- Sponsors - Groupe 2 (Duplication pour défilement continu) -->
+                <!-- Groupe 2 (Duplication pour défilement continu) -->
                 <div class="sponsor-card">
-                    <img src="https://via.placeholder.com/150x100/28a745/ffffff?text=Sponsor+1" alt="Sponsor 1" class="sponsor-logo">
-                    <div class="sponsor-name">Entreprise Locale</div>
+                    <img src="images/boucherieducoin.esvres.jpg" alt="Boucherie du Coin" class="sponsor-logo" onerror="this.src='https://via.placeholder.com/180x120/28a745/ffffff?text=Boucherie+du+Coin'">
+                    <div class="sponsor-name">Boucherie du Coin</div>
                 </div>
                 <div class="sponsor-card">
-                    <img src="https://via.placeholder.com/150x100/1e7e34/ffffff?text=Sponsor+2" alt="Sponsor 2" class="sponsor-logo">
-                    <div class="sponsor-name">Commerce de Proximité</div>
+                    <img src="images/optiqueac.JPG" alt="Optique AC" class="sponsor-logo" onerror="this.src='https://via.placeholder.com/180x120/1e7e34/ffffff?text=Optique+AC'">
+                    <div class="sponsor-name">Optique AC</div>
                 </div>
                 <div class="sponsor-card">
-                    <img src="https://via.placeholder.com/150x100/28a745/ffffff?text=Sponsor+3" alt="Sponsor 3" class="sponsor-logo">
-                    <div class="sponsor-name">Industrie Régionale</div>
-                </div>
-                <div class="sponsor-card">
-                    <img src="https://via.placeholder.com/150x100/ffd700/1e7e34?text=Mairie" alt="Mairie" class="sponsor-logo">
+                    <img src="https://via.placeholder.com/180x120/ffd700/1e7e34?text=Mairie" alt="Mairie" class="sponsor-logo">
                     <div class="sponsor-name">Ville de Saint-Avertin</div>
                 </div>
                 <div class="sponsor-card">
-                    <img src="https://via.placeholder.com/150x100/28a745/ffffff?text=Sponsor+5" alt="Sponsor 5" class="sponsor-logo">
-                    <div class="sponsor-name">Partenaire Principal</div>
+                    <img src="images/logo_SASTT.jpg" alt="SAS TT" class="sponsor-logo" onerror="this.src='https://www.sas-tennisdetable.fr/images/logo.png'">
+                    <div class="sponsor-name">SAS Tennis de Table</div>
                 </div>
             </div>
         </div>
@@ -460,7 +474,7 @@
     <!-- Timer d'affichage -->
     <div class="display-timer">
         <span class="timer-icon">⏱️</span>
-        Prochaine affiche dans <span id="countdown">10</span>s
+        Prochaine affiche dans <span id="countdown">15</span>s
     </div>
 
     <!-- Contrôles -->
@@ -474,21 +488,83 @@
     <button class="fullscreen-btn" onclick="toggleFullscreen()">🖥️ Plein écran</button>
 
     <script>
+        // Configuration Google Drive
+        const API_KEY = 'PLACEHOLDER_API_KEY';
+        const FOLDER_ID = 'PLACEHOLDER_FOLDER_ID';
+        
+        let pdfFiles = [];
         let currentSlide = 0;
         let autoPlayInterval;
         let countdownInterval;
         let isPlaying = true;
-        let countdown = 10;
-        const slideDelay = 10000; // 10 secondes
+        let countdown = 15;
+        const slideDelay = 15000; // 15 secondes
 
-        const slides = document.querySelectorAll('.poster-slide');
+        const posterContainer = document.getElementById('posterContainer');
         const indicatorsContainer = document.getElementById('indicators');
         const countdownElement = document.getElementById('countdown');
         const playPauseBtn = document.getElementById('playPauseBtn');
+        const posterTitle = document.getElementById('posterTitle');
+        const loading = document.getElementById('loading');
+
+        // Charger les PDF depuis Google Drive
+        async function loadPdfList() {
+            try {
+                const url = `https://www.googleapis.com/drive/v3/files?` +
+                    `q='${FOLDER_ID}'+in+parents+and+mimeType='application/pdf'` +
+                    `&key=${API_KEY}` +
+                    `&fields=files(id,name,createdTime,modifiedTime)` +
+                    `&orderBy=name`;
+
+                const response = await fetch(url);
+                
+                if (!response.ok) {
+                    throw new Error(`Erreur API: ${response.status}`);
+                }
+
+                const data = await response.json();
+                
+                if (!data.files || data.files.length === 0) {
+                    showError('Aucun fichier PDF trouvé dans le dossier.');
+                    return;
+                }
+
+                pdfFiles = data.files;
+                createSlides();
+                loading.style.display = 'none';
+                posterContainer.style.display = 'flex';
+                startAutoPlay();
+                
+            } catch (error) {
+                console.error('Erreur:', error);
+                showError('Impossible de charger les affiches. Vérifiez la configuration.');
+            }
+        }
+
+        // Créer les slides PDF
+        function createSlides() {
+            posterContainer.innerHTML = '';
+            
+            pdfFiles.forEach((pdf, index) => {
+                const slide = document.createElement('div');
+                slide.className = 'poster-slide';
+                if (index === 0) slide.classList.add('active');
+                
+                const iframe = document.createElement('iframe');
+                iframe.src = `https://drive.google.com/file/d/${pdf.id}/preview`;
+                
+                slide.appendChild(iframe);
+                posterContainer.appendChild(slide);
+            });
+
+            createIndicators();
+            updateTitle();
+        }
 
         // Créer les indicateurs
         function createIndicators() {
-            slides.forEach((_, index) => {
+            indicatorsContainer.innerHTML = '';
+            pdfFiles.forEach((_, index) => {
                 const indicator = document.createElement('div');
                 indicator.className = 'indicator';
                 if (index === 0) indicator.classList.add('active');
@@ -497,34 +573,45 @@
             });
         }
 
+        // Mettre à jour le titre
+        function updateTitle() {
+            if (pdfFiles.length > 0) {
+                posterTitle.textContent = pdfFiles[currentSlide].name;
+            }
+        }
+
         // Aller à une slide spécifique
         function goToSlide(index) {
+            const slides = document.querySelectorAll('.poster-slide');
+            const indicators = document.querySelectorAll('.indicator');
+            
             slides[currentSlide].classList.remove('active');
-            document.querySelectorAll('.indicator')[currentSlide].classList.remove('active');
+            indicators[currentSlide].classList.remove('active');
             
             currentSlide = index;
             
             slides[currentSlide].classList.add('active');
-            document.querySelectorAll('.indicator')[currentSlide].classList.add('active');
+            indicators[currentSlide].classList.add('active');
             
+            updateTitle();
             resetCountdown();
         }
 
         // Slide suivante
         function nextSlide() {
-            const next = (currentSlide + 1) % slides.length;
+            const next = (currentSlide + 1) % pdfFiles.length;
             goToSlide(next);
         }
 
         // Slide précédente
         function previousSlide() {
-            const prev = (currentSlide - 1 + slides.length) % slides.length;
+            const prev = (currentSlide - 1 + pdfFiles.length) % pdfFiles.length;
             goToSlide(prev);
         }
 
         // Réinitialiser le compte à rebours
         function resetCountdown() {
-            countdown = 10;
+            countdown = 15;
             countdownElement.textContent = countdown;
         }
 
@@ -576,22 +663,35 @@
             }
         }
 
-        // Initialisation
-        createIndicators();
-        startAutoPlay();
+        // Afficher erreur
+        function showError(message) {
+            loading.innerHTML = `<div class="error">❌ ${message}</div>`;
+        }
 
         // Pause au survol
-        document.getElementById('posterContainer').addEventListener('mouseenter', () => {
+        posterContainer.addEventListener('mouseenter', () => {
             if (isPlaying) {
                 clearInterval(countdownInterval);
             }
         });
 
-        document.getElementById('posterContainer').addEventListener('mouseleave', () => {
+        posterContainer.addEventListener('mouseleave', () => {
             if (isPlaying) {
                 startCountdown();
             }
         });
+
+        // Initialisation
+        window.onload = function() {
+            loadPdfList();
+        };
+
+        window.onbeforeunload = function() {
+            if (isPlaying) {
+                clearInterval(autoPlayInterval);
+                clearInterval(countdownInterval);
+            }
+        };
     </script>
 </body>
 </html>
